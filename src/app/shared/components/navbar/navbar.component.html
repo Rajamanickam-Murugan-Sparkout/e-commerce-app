@@ -1,7 +1,8 @@
 <nav class="bg-white border-b border-gray-200 px-4 py-2.5 dark:bg-gray-800 dark:border-gray-700 fixed left-0 right-0 top-0 z-50">
     <div class="flex justify-between items-center px-8">
-        <div>
-            <h1 class="font-bold">E-Commerce</h1>
+        <div class="flex items-center">
+            <img src="assets/images/e-commerce-logo.svg" width="100px" alt="logo">
+            <h1 class="font-bold text-2xl text-gray-600"><span class="text-primary-500">E-</span>Co<span class="text-primary-500">M<sup>2</sup></span>erce</h1>
         </div>
         <div class="flex">
             <div class="me-10">
@@ -30,7 +31,7 @@
                         <p class="text-center text-base font-semibold leading-none text-gray-900 dark:text-white">Your shopping cart</p>
                     </div>
                 
-                    <div *ngFor="let cartProducts of getAddToCartProducts" class="grid grid-cols-2 items-center">
+                    <div *ngFor="let cartProducts of getAddToCartProducts; let i = index" class="grid grid-cols-2 items-center">
                         <div class="flex items-center gap-2">
                             <a href="#" class="flex aspect-square h-9 w-9 shrink-0 items-center">
                                 <img class="h-auto max-h-full w-full dark:hidden" src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/iphone-light.svg" alt="imac image" />
@@ -38,27 +39,27 @@
                             </a>
                             <div>
                                 <a href="#" class="truncate text-sm font-semibold leading-none text-gray-900 hover:underline dark:text-white">{{ cartProducts.title }}</a>
-                                <p class="mt-0.5 truncate text-sm font-normal text-gray-500 dark:text-gray-400">{{ cartProducts.price | currency:'USD':'symbol':'2.0' }}</p>
+                                <p class="mt-0.5 truncate text-sm font-normal text-gray-500 dark:text-gray-400">{{ cartProducts.price * cartProducts.quantity | currency:'USD':'symbol':'0.0' }}</p>
                             </div>
                         </div>
                         <div class="flex items-center justify-end gap-3">
-                            <form action="#">
+                            <form>
                                 <label for="counter-input-6" class="sr-only">Choose quantity:</label>
                                 <div class="relative flex items-center">
-                                    <button type="button" id="decrement-button-6" data-input-counter-decrement="counter-input-6" class="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700">
+                                    <button (click)="decrementQuantity(i)" type="button" id="decrement-button-6" data-input-counter-decrement="counter-input-6" class="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700">
                                         <svg class="h-2.5 w-2.5 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h16" />
                                         </svg>
                                     </button>
-                                    <input type="text" id="counter-input-6" data-input-counter class="w-10 shrink-0 border-0 bg-transparent text-center text-sm font-medium text-gray-900 focus:outline-none focus:ring-0 dark:text-white" placeholder="" value="2" required />
-                                    <button type="button" id="increment-button-6" data-input-counter-increment="counter-input-6" class="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700">
+                                    <input type="text" id="counter-input-6" data-input-counter class="w-10 shrink-0 border-0 bg-transparent text-center text-sm font-medium text-gray-900 focus:outline-none focus:ring-0 dark:text-white" placeholder="" value="{{ cartProducts.quantity }}" required />
+                                    <button (click)="incrementQuantity(i)" type="button" id="increment-button-6" data-input-counter-increment="counter-input-6" class="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700">
                                         <svg class="h-2.5 w-2.5 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16" />
                                         </svg>
                                     </button>
                                 </div>
                             </form>
-                            <button data-tooltip-target="tooltipRemoveItem11" type="button" class="text-red-600 hover:text-red-700 dark:text-red-500 dark:hover:text-red-600">
+                            <button (click)="removeItem(i)" data-tooltip-target="tooltipRemoveItem11" type="button" class="text-red-600 hover:text-red-700 dark:text-red-500 dark:hover:text-red-600">
                                 <span class="sr-only"> Remove </span>
                                 <svg class="h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z" />
@@ -70,11 +71,15 @@
                             </div>
                         </div>
                     </div>
-                    <div class="space-y-4 border-t border-gray-200 pt-4 dark:border-gray-700">
+                    <div *ngIf="!hideTotalPrice" class="space-y-4 border-t border-gray-200 pt-4 dark:border-gray-700">
                         <dl class="space-y-2.5 text-center">
                             <dt class="leading-none text-gray-500 dark:text-gray-400">Total payment</dt>
-                            <dd class="text-lg font-semibold leading-none text-gray-900 dark:text-white">$6,796</dd>
+                            <dd class="text-lg font-semibold leading-none text-gray-900 dark:text-white">{{ calculateProductTotalPrice() | currency:'USD':'symbol':'1.0' }}</dd>
                         </dl>
+                    </div>
+                    <div *ngIf="hideTotalPrice" class="space-y-4 border-gray-200 p-10 dark:border-gray-700">
+                        <img src="assets/images/empty-cart.svg" alt="empty-cart">
+                        <p class="text-center text-gray-500 dark:text-gray-400">Empty cart</p>
                     </div>
                 </div>
             </div>

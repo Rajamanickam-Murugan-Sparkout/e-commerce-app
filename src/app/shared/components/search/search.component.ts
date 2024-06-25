@@ -10,10 +10,14 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent {
-  @Output() sendDataToParent: EventEmitter<string> = new EventEmitter();
+  @Output() sendData: EventEmitter<string> = new EventEmitter();
 
-  public searchProduct: any;
+  searchProduct: string = '';
   constructor(){
-    this.sendDataToParent.emit(this.searchProduct);
   }
+
+  onSearchInputChange(event: any){
+    this.sendData.emit(event)
+  }
+
 }
