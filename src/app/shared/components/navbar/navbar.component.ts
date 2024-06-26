@@ -24,7 +24,7 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('oninit log',this.getAddToCartProducts.length);
+    // console.log('oninit log',this.getAddToCartProducts.length);
     
     if(this.getAddToCartProducts.length === 0){
       this.hideTotalPrice = false;
@@ -61,8 +61,9 @@ export class NavbarComponent implements OnInit {
    * @param i 
    */
   removeItem(i: any){
-    console.log('remove item', this.getAddToCartProducts[i].removeItem());    
-    this.getAddToCartProducts[i].remove()
+    console.log(this.getAddToCartProducts);
+    console.log('remove item', this.getAddToCartProducts.splice(i,1));
+
   }
 
   /**
