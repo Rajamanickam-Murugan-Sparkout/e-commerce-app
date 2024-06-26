@@ -26,6 +26,10 @@ export class HomeComponent {
   }
   public products = Products;
 
+  /**
+   * Get the index of the clicked 'Add to Cart' button for each product and push the index value to a new array named addToCartProducts.
+   * @param idx 
+   */
   onAddCartProduct(idx: number){
     // this.addedCart = !this.addedCart;    
     // if(this.products.id)
@@ -40,6 +44,10 @@ export class HomeComponent {
     // console.log('add to cart product',this.addToCartProducts);
   }
 
+  /**
+   * Receives data from child search component 
+   * @param data 
+   */
   receiveDataFromChild(data: any){
     console.log('received data',data);
     this.receiveData = data;

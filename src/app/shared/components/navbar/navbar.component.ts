@@ -40,19 +40,35 @@ export class NavbarComponent implements OnInit {
   public userName = this.localStorage.userLocalStorageGet('user').name;
   public userEmail = this.localStorage.userLocalStorageGet('user').email;
 
+  /**
+   * When clicking a decrement button, decrease the value of a particular product based on its index.
+   * @param i 
+   */
   decrementQuantity(i: any){
     this.getAddToCartProducts[i].quantity--;
   }
 
+  /**
+   * When clicking a increment button, increase the value of a particular product based on its index.
+   * @param i 
+   */
   incrementQuantity(i: any){
     this.getAddToCartProducts[i].quantity++;
   }
 
+  /**
+   * When clicking a delete icon button, delete the specific cart product based on its index.
+   * @param i 
+   */
   removeItem(i: any){
     console.log('remove item', this.getAddToCartProducts[i].removeItem());    
     this.getAddToCartProducts[i].remove()
   }
 
+  /**
+   * Calculate the total price of all cart products, including a discount percentage.
+   * @returns  
+   */
   calculateProductTotalPrice() {
     let overallTotal = 0;
     for (let item of this.getAddToCartProducts) {
@@ -63,6 +79,9 @@ export class NavbarComponent implements OnInit {
     return overallTotal;
   }
   
+  /**
+   * When the user logs out, clear the local storage data and redirect to the login page.
+   */
   logOut(){
     this.localStorage.userLoggedOut();
     this.router.navigate(['/login']);

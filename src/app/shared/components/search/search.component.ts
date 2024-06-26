@@ -16,6 +16,10 @@ export class SearchComponent {
   constructor(){
   }
 
+  /**
+   * Retrieve a search input value and send it to the home component (parent).
+   * @param event 
+   */
   onSearchInputChange(event: any){
     this.sendData.emit(event)
   }
