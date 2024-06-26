@@ -31,8 +31,8 @@ export class HomeComponent {
     // if(this.products.id)
     // const newArray = { ...this.addToCartProducts, isAdded: true}
     // this.addToCartProducts[idx].quantity++;
-    this.products[idx].quantity++;
-    this.addToCartProducts.push(this.products[idx]);
+      this.products[idx].quantity++;
+      this.addToCartProducts.push(this.products[idx]);
     // console.log(idx);
     // console.log("already exists", this.addToCartProducts);
     // if(this.addToCartProducts.indexOf(idx)){

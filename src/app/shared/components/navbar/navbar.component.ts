@@ -1,4 +1,4 @@
-import { Component, DoCheck, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { AfterViewChecked, Component, DoCheck, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { Router } from '@angular/router';
@@ -15,6 +15,7 @@ export class NavbarComponent implements OnInit {
   @Input() getAddToCartProducts: any[] = [];
 
   hideTotalPrice: boolean = false;
+  hideEmptyImage: boolean = true;
   
   constructor(
     private localStorage: LocalStorageService,
@@ -23,8 +24,16 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log('oninit log',this.getAddToCartProducts.length);
+    
     if(this.getAddToCartProducts.length === 0){
-      this.hideTotalPrice = !this.hideTotalPrice;
+      this.hideTotalPrice = false;
+      // console.log("quantity changes", this.getAddToCartProducts.length);
+    }else if(this.getAddToCartProducts.length){
+      console.log(this.hideEmptyImage, this.hideTotalPrice);
+      this.hideTotalPrice = true;
+      this.hideEmptyImage = false;
+      // this.hideTotalPrice = true; 
     }
   }
 
@@ -40,8 +49,8 @@ export class NavbarComponent implements OnInit {
   }
 
   removeItem(i: any){
-    console.log(this.getAddToCartProducts[i]);    
-    this.getAddToCartProducts[i].quantity ;
+    console.log('remove item', this.getAddToCartProducts[i].removeItem());    
+    this.getAddToCartProducts[i].remove()
   }
 
   calculateProductTotalPrice() {
