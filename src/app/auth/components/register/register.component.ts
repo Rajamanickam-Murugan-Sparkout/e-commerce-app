@@ -4,7 +4,8 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { User } from 'src/app/interfaces/common-interface';
-import { ToasterService } from 'src/app/shared/services/toaster.service';
+// import { ToasterService } from 'src/app/shared/services/toaster.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-register',
@@ -20,7 +21,7 @@ export class RegisterComponent {
 
   constructor(
     private authService: AuthService,
-    private toaster: ToasterService,
+    private toaster: ToastrService,
     private router: Router
   ){
 
@@ -34,6 +35,9 @@ export class RegisterComponent {
   }
 );
 
+/**
+ * The registration form submitted sends form data to the server, redirects to the login page, and displays a toaster message.
+ */
 public registerFormSubmitted(){ 
   const postUserDetails = { ...this.registerForm.value }
   delete postUserDetails.confirmPassword;
@@ -41,16 +45,19 @@ public registerFormSubmitted(){
   this.authService.registerUser(postUserDetails as User).subscribe({
     next: (res)=>{
       console.log(res);
-      // this.toaster.showSuccess()
+      this.toaster.success("User signup successfully!")
       this.router.navigate(["login"])
     },
     error: (err)=>{
       console.log(err);  
-      this.toaster.showError()
+      this.toaster.error("Something went wrong!")
     }
   })
 }
 
+/**
+ * Toggles password visibility hide and show
+ */
 togglePasswordVisibility(){
   this.showPassword = !this.showPassword;
   const passwordInput = document.getElementById('hs-toggle-password') as HTMLInputElement;
@@ -61,6 +68,9 @@ togglePasswordVisibility(){
   }
 }
 
+/**
+ * Toggles confirm password visibility hide and show
+ */
 toggleConfirmPasswordVisibility(){
   this.showConfirmPassword = !this.showConfirmPassword;
   const confirmPasswordInput = document.getElementById('hs-toggle-confirm-password') as HTMLInputElement;

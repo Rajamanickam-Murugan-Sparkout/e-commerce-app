@@ -3,7 +3,8 @@ import { CommonModule, JsonPipe, KeyValuePipe } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import { ToasterService } from 'src/app/shared/services/toaster.service';
+// import { ToasterService } from 'src/app/shared/services/toaster.service';
+import { ToastrService , ToastNoAnimation } from 'ngx-toastr';
 import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
 
 @Component({
@@ -20,7 +21,7 @@ export class LoginComponent {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private toaster: ToasterService,
+    private toaster: ToastrService,
     private localStorage: LocalStorageService
   ){}
 
@@ -29,6 +30,10 @@ export class LoginComponent {
     'password': new FormControl('', Validators.required),
   });
 
+  /**
+  * The login form submitted to check the user to exist in the server if the user exist to redirect home page and displays a toaster message.
+  * User details to be stored in the local storage to check if the user is authenticated
+  */
   onLoginFormSubmitted(){
     this.authService.loginUser().subscribe({
       next: (res: any)=>{
@@ -39,18 +44,21 @@ export class LoginComponent {
           console.log(user);
           this.localStorage.userLocalStorageSet(user);
           this.loginForm.reset();
+          this.toaster.success("User logged in successfully!")
           this.router.navigate(['/home']);
         }else{
-          this.toaster.showError();
+          this.toaster.error("something went wrong");
         }
       },
       error: (err: any)=>{
-        alert('Something went wrong!')
-        this.toaster.showError()
+        this.toaster.error("something went wrong")
       }
     })
   }
 
+  /**
+   * Toggles password visibility hide and show
+   */
   togglePasswordVisibility(){
     this.showPassword = !this.showPassword;
     const passwordInput = document.getElementById('hs-toggle-login-password') as HTMLInputElement;

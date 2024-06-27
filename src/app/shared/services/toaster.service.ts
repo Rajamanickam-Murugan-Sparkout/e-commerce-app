@@ -7,7 +7,6 @@ import { ToastrService } from 'ngx-toastr';
 export class ToasterService {
 
   constructor(private toaster: ToastrService) { }
-
   
   showSuccess() {
     this.toaster.success("register successfully", "Success");

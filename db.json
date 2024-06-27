@@ -47,6 +47,24 @@
       "name": "test",
       "email": "test123@gmail.com",
       "password": "123"
+    },
+    {
+      "id": "4733",
+      "name": "Dharshan",
+      "email": "dharshan@gmail.com",
+      "password": "12345"
+    },
+    {
+      "id": "23e6",
+      "name": "Gokulnath",
+      "email": "gokulnath@gmail.com",
+      "password": "12345"
+    },
+    {
+      "id": "e014",
+      "name": "Dinesh",
+      "email": "dinesh@gmail.com",
+      "password": "12345"
     }
   ]
 }
