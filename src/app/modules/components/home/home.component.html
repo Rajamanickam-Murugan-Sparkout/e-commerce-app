@@ -3,11 +3,12 @@
       <app-navbar [getAddToCartProducts]="addToCartProducts"></app-navbar>
       <div class="flex justify-around w-full px-8 pl-36">
         <app-sort></app-sort>
-        <app-range-filter class="w-4/12"></app-range-filter>
+        <app-range-filter class="w-2/4" (sendRangeValue)="receiveRangeValue($event)"></app-range-filter>
+        <!-- <app-range-filter class="w-4/12"></app-range-filter> -->
         <app-search (sendData)="receiveDataFromChild($event)" ></app-search>
       </div>
       <div class="mb-4 grid gap-4 sm:grid-cols-2 md:mb-8 lg:grid-cols-3 xl:grid-cols-4">
-        <div *ngFor="let i = index; let product of products | search: receiveData" class="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+        <div *ngFor="let i = index; let product of products | filter: filteredProducts | search: receiveData" class="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
           <div>
             <a href="#">
               <img class="mx-auto h-full dark:hidden" src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front.svg" alt="" />
@@ -70,3 +71,45 @@
       </div>
     </div>
 </section>
+
+<div class="container mx-auto">
+  <h2 class="text-2xl font-bold mb-4">Products List</h2>
+  <ul>
+    <li *ngFor="let product of productsList" (click)="toggleDetails(product)"
+        class="bg-white rounded shadow-md p-4 mb-4 cursor-pointer">
+      <div class="flex justify-between items-center">
+        <div>
+          <p class="text-lg font-semibold">{{ product.name }}</p>
+          <p class="text-gray-600">Price: ${{ product.price }}</p>
+          <p class="text-gray-600">Quantity: {{ product.quantity }}</p>
+        </div>
+        <svg *ngIf="isSelected(product)" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400"
+              fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M9 5l7 7-7 7"/>
+        </svg>
+      </div>
+      <div *ngIf="isSelected(product)" class="mt-4">
+        <!-- Nested table or details -->
+        <table class="table-auto w-full">
+          <thead class="bg-gray-100">
+            <tr>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Details</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Quantity</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="px-6 py-4 whitespace-nowrap">{{ product.name }}</td>
+              <td class="px-6 py-4 whitespace-nowrap">${{ product.price }}</td>
+              <td class="px-6 py-4 whitespace-nowrap">{{ product.quantity }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </li>
+  </ul>
+</div>
+
+

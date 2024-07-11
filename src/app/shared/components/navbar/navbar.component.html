@@ -4,7 +4,7 @@
             <img src="assets/images/e-commerce-logo.svg" width="100px" alt="logo">
             <h1 class="font-bold text-2xl text-gray-600"><span class="text-primary-500">E-</span>Co<span class="text-primary-500">M<sup>2</sup></span>erce</h1>
         </div>
-        <div class="flex">
+        <!-- <div class="flex">
             <div class="me-10">
                 <button id="cartDropdownButton3" data-dropdown-toggle="cartDropdown3" type="button" class="inline-flex items-center rounded-lg justify-center p-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-sm font-medium leading-none text-gray-900 dark:text-white">
                     <span class="sr-only">
@@ -25,7 +25,6 @@
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7"></path>
                     </svg>
                 </button>
-<!-- Dropdown Menu -->
                 <div id="cartDropdown3" class="mx-auto hidden z-50 max-w-sm space-y-4 overflow-hidden rounded-lg bg-white p-4 antialiased shadow-lg dark:bg-gray-700">
                     <div class="border-b border-gray-200 pb-4 dark:border-gray-700">
                         <p class="text-center text-base font-semibold leading-none text-gray-900 dark:text-white">Your shopping cart</p>
@@ -130,6 +129,166 @@
                     </ul>
                 </div>            
             </div>
+        </div> -->
+
+    <div class="flex">
+        <button id="cartDropdownButton3" data-modal-target="shoppingCartModal" data-modal-toggle="shoppingCartModal" type="button" class="inline-flex items-center rounded-lg justify-center p-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-sm font-medium leading-none text-gray-900 dark:text-white">
+            <span class="sr-only">
+                Cart
+            </span>
+            <div class="relative sm:me-2.5">
+                <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7H7.312"/>
+                </svg>                  
+                <div class="absolute inline-flex items-center justify-center w-4 h-4 text-xs font-medium text-white bg-red-700 rounded-full -top-1.5 -end-1.5 dark:bg-red-600 ">
+                    {{ getAddToCartProducts.length }}
+                </div>
+            </div>
+            <span class="hidden sm:flex">
+                My Cart
+            </span>
+            <svg class="hidden sm:flex w-4 h-4 text-gray-900 dark:text-white ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7"></path>
+            </svg>
+        </button>
+        <div id="shoppingCartModal" tabindex="-1" aria-hidden="true" class="antialiased fixed left-0 right-0 top-0 z-50 hidden h-modal w-full items-center justify-center overflow-y-auto overflow-x-hidden md:inset-0 md:h-full">
+            <div class="relative h-full w-full max-w-2xl p-4 md:h-auto">
+                <!-- Modal content -->
+                <div class="relative rounded-lg bg-white p-4 shadow dark:bg-gray-800 sm:p-5">
+                <!-- Modal header -->
+                    <div class="mb-4 flex items-center justify-between rounded-t border-b pb-4 dark:border-gray-600 sm:mb-5">
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Shopping Cart</h3>
+                        <button type="button" class="ml-auto inline-flex items-center rounded-lg bg-transparent p-1.5 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="shoppingCartModal">
+                            <svg aria-hidden="true" class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                            <span class="sr-only">Close modal</span>
+                        </button>
+                    </div>
+                    <div class="relative overflow-x-auto">
+                        <table class="w-full text-left text-base text-gray-900 dark:text-white md:table-fixed">
+                            <tbody>
+                            <tr *ngFor="let cartProducts of getAddToCartProducts; let i = index" class="border-b border-gray-200 dark:border-gray-700">
+                              <td class="w-56 min-w-44 whitespace-nowrap py-4">
+                                <div class="flex items-center gap-4 font-medium">
+                                  <div class="aspect-square h-10 w-10 shrink-0">
+                                    <img class="h-full w-full dark:hidden" src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front.svg" alt="imac image" />
+                                    <img class="hidden h-full w-full dark:block" src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front-dark.svg" alt="imac image" />
+                                  </div>
+                                  <div>
+                                      {{ cartProducts.title }}
+                                      <div class="flex items-center gap-2">
+                                          <p class="mt-0.5 truncate text-sm font-normal text-gray-500 dark:text-gray-400">{{ cartProducts.price | currency:'USD':'symbol':'0.0' }}</p>
+                                          <span class="rounded bg-primary-100 px-1 py-0.3 text-xs font-medium text-primary-800 dark:bg-primary-900 dark:text-primary-300"><span>{{ cartProducts.discountPercentage.toFixed(0) }}</span>% off </span>
+                                      </div>
+                                  </div>
+                                </div>
+                              </td>
+                
+                              <td class="p-4">
+                                <div>
+                                    <label for="counter-input-6" class="sr-only">Choose quantity:</label>
+                                    <div class="relative flex items-center">
+                                        <button (click)="decrementQuantity(i)" type="button" id="decrement-button-6" data-input-counter-decrement="counter-input-6" class="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700">
+                                            <svg class="h-2.5 w-2.5 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
+                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h16" />
+                                            </svg>
+                                        </button>
+                                        <input type="text" id="counter-input-6" data-input-counter class="w-10 shrink-0 border-0 bg-transparent text-center text-sm font-medium text-gray-900 focus:outline-none focus:ring-0 dark:text-white" placeholder="" value="{{ cartProducts.quantity }}" required />
+                                        <button (click)="incrementQuantity(i)" type="button" id="increment-button-6" data-input-counter-increment="counter-input-6" class="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700">
+                                            <svg class="h-2.5 w-2.5 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                              </td>
+                
+                              <td class="p-4 text-center text-base font-bold text-gray-900 dark:text-white">{{ cartProducts.price * cartProducts.quantity | currency:'USD':'symbol':'0.2' }}</td>
+                
+                              <td class="py-4 text-end">
+                                <button type="button" (click)="removeItem(i)" class="inline-flex items-center gap-1.5 text-sm font-medium text-red-600 dark:text-red-500">
+                                  <svg class="h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z" />
+                                  </svg>
+                                  Remove
+                                </button>
+                              </td>
+                            </tr>
+                        </tbody>
+                        </table>
+                        <div class="mt-4 space-y-4" *ngIf="hideTotalPrice">
+                            <h4 class="text-lg font-semibold text-gray-900 dark:text-white">Order summary</h4>
+                            <div class="space-y-4">
+                              <div class="space-y-2">
+                                <dl class="flex items-center justify-between gap-4">
+                                  <dt class="text-gray-500 dark:text-gray-400">Original price</dt>
+                                  <dd class="text-base font-medium text-gray-900 dark:text-white">{{ calculateProductsTotalPrice() | currency:'USD':'symbol':'1.2'}}</dd>
+                                </dl>
+                    
+                                <dl class="flex items-center justify-between gap-4 border-b pb-4 ">
+                                  <dt class="text-gray-500 dark:text-gray-400">Savings</dt>
+                                  <dd class="text-base font-medium text-green-500">-{{ calculateDiscountAmount() | currency:'USD':'symbol':'1.2'}}</dd>
+                                </dl>
+                              </div>
+                    
+                              <dl class="flex items-center justify-between gap-4">
+                                <dt class="text-lg font-bold text-gray-900 dark:text-white">Total Price</dt>
+                                <dd class="text-lg font-bold text-gray-900 dark:text-white">{{ calculateProductsTotalPriceIncludeOffer() | currency:'USD':'symbol':'1.2' }}</dd>
+                              </dl>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="flex justify-center">
+                            <div *ngIf="hideEmptyImage" class="w-3/4 space-y-4 border-gray-200 p-10 dark:border-gray-700">
+                                <img src="assets/images/empty-cart.svg" alt="empty-cart">
+                                <p class="text-center text-gray-500 dark:text-gray-400">Empty cart</p>
+                            </div>
+                        </div>
+                </div>
+            </div>
         </div>
+        <div class="ml-5">
+            <button
+            type="button"
+            class="flex mx-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+            id="user-menu-button"
+            aria-expanded="false"
+            data-dropdown-toggle="dropdown"
+            >
+            <span class="sr-only">Open user menu</span>
+            <img
+                class="w-8 h-8 rounded-full"
+                src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/michael-gough.png"
+                alt="user photo"
+            />
+            </button>
+            <div
+                class="hidden z-50 my-4 w-56 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600 rounded-xl"
+                id="dropdown"
+            >
+                <div class="py-3 px-4">
+                    <span
+                        class="block text-sm font-semibold text-gray-900 dark:text-white"
+                        >{{ userName }}</span
+                    >
+                    <span
+                        class="block text-sm text-gray-900 truncate dark:text-white"
+                        >{{ userEmail }}</span
+                    >
+                </div>
+                <ul
+                    class="py-1 text-gray-700 dark:text-gray-300"
+                    aria-labelledby="dropdown"
+                >
+                    <li>
+                        <button 
+                            (click)="logOut()"
+                            class="w-full text-start py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                            >Sign out
+                        </button>
+                    </li>
+                </ul>
+            </div>            
+        </div>
+    </div>
     </div>
 </nav>

@@ -1,4 +1,4 @@
-import { AfterViewChecked, Component, DoCheck, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { AfterContentChecked, AfterViewChecked, Component, DoCheck, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { Router } from '@angular/router';
@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements AfterContentChecked {
 
   @Input() getAddToCartProducts: any[] = [];
 
@@ -23,17 +23,11 @@ export class NavbarComponent implements OnInit {
   ){    
   }
 
-  ngOnInit() {
-    // console.log('oninit log',this.getAddToCartProducts.length);
-    
-    if(this.getAddToCartProducts.length === 0){
-      this.hideTotalPrice = false;
-      // console.log("quantity changes", this.getAddToCartProducts.length);
-    }else if(this.getAddToCartProducts.length){
-      console.log(this.hideEmptyImage, this.hideTotalPrice);
+  ngAfterContentChecked() {
+    console.log('ng after content checked', this.getAddToCartProducts.length);
+    if(this.getAddToCartProducts.length !== 0){
       this.hideTotalPrice = true;
       this.hideEmptyImage = false;
-      // this.hideTotalPrice = true; 
     }
   }
 
@@ -66,16 +60,33 @@ export class NavbarComponent implements OnInit {
 
   }
 
+  calculateProductsTotalPrice(){
+    let productsTotal = 0;
+    for (let item of this.getAddToCartProducts) {
+      productsTotal += item.price * item.quantity;
+    }
+    return productsTotal;
+  }
+
+  calculateDiscountAmount(){
+    let discountedPrice = 0;
+    for (let item of this.getAddToCartProducts) {
+      discountedPrice += (item.discountPercentage/100)*item.price * item.quantity;
+    }
+    return discountedPrice;
+  }
+
   /**
    * Calculate the total price of all cart products, including a discount percentage.
    * @returns  
    */
-  calculateProductTotalPrice() {
+  calculateProductsTotalPriceIncludeOffer() {
     let overallTotal = 0;
     for (let item of this.getAddToCartProducts) {
-      let discountInDecimal = (item.discountPercentage/100)*item.price;
-      let discountAmount = item.price - discountInDecimal;
-      overallTotal += discountAmount;
+      let discountAmount = (item.discountPercentage/100)*item.price;
+      let discountedPrice = item.price * item.quantity - discountAmount;
+      overallTotal += discountedPrice * item.quantity;
+      console.log(discountAmount, discountedPrice);
     }
     return overallTotal;
   }
